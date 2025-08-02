@@ -192,9 +192,9 @@ const Products = () => {
               <Card.Img variant="top" src={product.image} className="product-img" />
               <Card.Body className="d-flex flex-column justify-content-between p-3">
                 <div>
-                  <Card.Title className="fw-semibold" style={{ color: '#393E46', fontSize: '1.1rem' }}>{product.name}</Card.Title>
-                  <Card.Text className="fw-bold" style={{ color: '#d90429' }}>₹{product.price}</Card.Text>
-                  <Card.Text style={{ fontSize: '0.9rem', color: '#6c757d' }}>{product.description}</Card.Text>
+                  <Card.Title className="fw-semibold" style={{ color: '#393E46', fontSize: '1.1rem', fontFamily: 'Outfit, sans-serif', }}>{product.name}</Card.Title>
+                  <Card.Text className="fw-bold" style={{ color: '#d90429', fontFamily: 'Outfit, sans-serif', }}>₹{product.price}</Card.Text>
+                  <Card.Text style={{ fontSize: '0.9rem', color: '#6c757d', fontFamily: 'Outfit, sans-serif', }}>{product.description}</Card.Text>
                 </div>
                 <div className="d-flex gap-2 mt-3 flex-wrap justify-content-between">
                   <Button onClick={() => handleAddToCart(product)} className="product-button-outline">
@@ -253,7 +253,7 @@ const Products = () => {
           </Modal.Body>
           <Modal.Footer>
             <Button variant="secondary" onClick={() => setShowModal(false)}>Cancel</Button>
-            <Button type="submit" style={{ backgroundColor: '#d90429', border: 'none' }}>Submit Order</Button>
+            <Button type="submit" style={{ backgroundColor: '#d90429', border: 'none', fontFamily: 'Outfit, sans-serif', }}>Submit Order</Button>
           </Modal.Footer>
         </Form>
       </Modal>
