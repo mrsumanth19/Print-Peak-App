@@ -126,7 +126,7 @@ const Products = () => {
 
     if (method === 'Card Payment') {
       try {
-        const res = await axios.post('/api/orders/create-stripe-session', formData, {
+        const res = await axios.post(`${process.env.REACT_APP_API_URL}/api/orders/create-stripe-session`, formData, {
           headers: { 'Content-Type': 'multipart/form-data' },
         });
         const stripe = await stripePromise;
@@ -138,7 +138,7 @@ const Products = () => {
     }
 
     try {
-      await axios.post('/api/orders/custom', formData, {
+      await axios.post(`${process.env.REACT_APP_API_URL}/api/orders/custom`, formData, {
         headers: { 'Content-Type': 'multipart/form-data' },
       });
       setModalInfo({

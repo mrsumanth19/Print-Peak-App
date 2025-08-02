@@ -10,7 +10,7 @@ const Home = () => {
   useEffect(() => {
     const fetchTrendingProducts = async () => {
       try {
-        const res = await axios.get('/api/products');
+        const res = await axios.get(`${process.env.REACT_APP_API_URL}/api/products`);
         setProducts(res.data.slice(0, 4));
       } catch (err) {
         console.error('❌ Error fetching products:', err);

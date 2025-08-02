@@ -29,10 +29,11 @@ const Login = () => {
     setErr('');
 
     try {
-      const { data } = await axios.post('http://localhost:5000/api/auth/login', {
-        email,
-        password,
-      });
+  const { data } = await axios.post(`${process.env.REACT_APP_API_URL}/api/auth/login`, {
+    email,
+    password,
+  });
+
 
       localStorage.setItem('token', data.token);
       localStorage.setItem('user', JSON.stringify(data.user));
@@ -57,7 +58,7 @@ const Login = () => {
   const handleCartOk = async () => {
     const pending = JSON.parse(localStorage.getItem('pendingAction'));
     try {
-      await axios.post('/api/cart/add', {
+      await axios.post(`${process.env.REACT_APP_API_URL}/api/cart/add`, {
         userId: JSON.parse(localStorage.getItem('user'))._id,
         productId: pending.productId,
       });

@@ -36,11 +36,11 @@ const Register = () => {
     }
 
     try {
-      const { data } = await axios.post('http://localhost:5000/api/auth/register', {
-        name,
-        email,
-        password,
-      });
+  const { data } = await axios.post(`${process.env.REACT_APP_API_URL}/api/auth/register`, {
+    name,
+    email,
+    password,
+  });
 
       localStorage.setItem('token', data.token);
       localStorage.setItem('user', JSON.stringify(data.user));

@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import axios from 'axios';
 import './AdminDashboard.css';
-import CustomModal from '../components/CustomModal'; // Adjust the path if needed
+import CustomModal from '../components/CustomModal';
 
 import {
   Container,
@@ -25,7 +25,7 @@ const colors = {
 };
 
 const AdminDashboard = () => {
-  const [activeSection, setActiveSection] = useState('profile'); // Default to profile section
+  const [activeSection, setActiveSection] = useState('profile');
   const [product, setProduct] = useState({ name: '', price: '', description: '', image: null, _id: null });
   const [products, setProducts] = useState([]);
   const [users, setUsers] = useState([]);
@@ -35,10 +35,8 @@ const AdminDashboard = () => {
   const [showMenu, setShowMenu] = useState(false);
   const token = localStorage.getItem('token');
   const [showSuccessModal, setShowSuccessModal] = useState(false);
-const [successMessage, setSuccessMessage] = useState('');
+  const [successMessage, setSuccessMessage] = useState('');
 
-
-  // Profile state
   const [user, setUser] = useState(null);
   const [loading, setLoading] = useState(true);
   const [showEditModal, setShowEditModal] = useState(false);
@@ -52,7 +50,6 @@ const [successMessage, setSuccessMessage] = useState('');
   const [newPassword, setNewPassword] = useState('');
   const [passwordMessage, setPasswordMessage] = useState('');
 
-  // Stats state
   const [totalOrders, setTotalOrders] = useState(0);
   const [totalSpent, setTotalSpent] = useState(0);
   const [totalCarts, setTotalCarts] = useState(0);
@@ -64,7 +61,6 @@ const [successMessage, setSuccessMessage] = useState('');
   const [modalMessage, setModalMessage] = useState('');
   const [onConfirm, setOnConfirm] = useState(null);
 
-  // Fetch all data on component mount
   useEffect(() => {
     const storedUser = localStorage.getItem('user');
     if (!storedUser || storedUser === 'undefined') {
@@ -81,33 +77,31 @@ const [successMessage, setSuccessMessage] = useState('');
 
     const fetchAllData = async () => {
       try {
-        // Fetch user stats
-        const ordersRes = await axios.get(`/api/orders/user/${parsedUser._id}`);
+        const ordersRes = await axios.get(`${process.env.REACT_APP_API_URL}/api/orders/user/${parsedUser._id}`);
         const orders = ordersRes.data || [];
         setTotalOrders(orders.length);
         const spent = orders.reduce((sum, order) => sum + (order.product?.price || 0), 0);
         setTotalSpent(spent);
 
-        const cartRes = await axios.get(`/api/cart/user/${parsedUser._id}`);
+        const cartRes = await axios.get(`${process.env.REACT_APP_API_URL}/api/cart/user/${parsedUser._id}`);
         setTotalCarts(cartRes.data?.length || 0);
 
-        // Fetch admin data
-        const productsRes = await axios.get('/api/products');
+        const productsRes = await axios.get(`${process.env.REACT_APP_API_URL}/api/products`);
         setProducts(productsRes.data);
         setTotalProducts(productsRes.data.length);
 
-        const usersRes = await axios.get('/api/admin/users', {
+        const usersRes = await axios.get(`${process.env.REACT_APP_API_URL}/api/admin/users`, {
           headers: { Authorization: `Bearer ${token}` },
         });
         setUsers(usersRes.data);
         setTotalUsers(usersRes.data.length);
 
-        const adminOrdersRes = await axios.get('/api/admin/orders', {
+        const adminOrdersRes = await axios.get(`${process.env.REACT_APP_API_URL}/api/admin/orders`, {
           headers: { Authorization: `Bearer ${token}` },
         });
         setOrders(adminOrdersRes.data);
         setTotalAdminOrders(adminOrdersRes.data.length);
-        
+
         setLoading(false);
       } catch (error) {
         console.error('Error fetching data:', error);
@@ -137,14 +131,11 @@ const [successMessage, setSuccessMessage] = useState('');
     setShowModal(false);
   };
 
-  const handleCancel = () => {
-    setShowModal(false);
-  };
+  const handleCancel = () => setShowModal(false);
 
-  // Product Functions
   const fetchProducts = async () => {
     try {
-      const res = await axios.get('/api/products');
+      const res = await axios.get(`${process.env.REACT_APP_API_URL}/api/products`);
       setProducts(res.data);
       setTotalProducts(res.data.length);
     } catch (error) {
@@ -163,48 +154,47 @@ const [successMessage, setSuccessMessage] = useState('');
     }
   };
 
- const handleProductSubmit = async (e) => {
-  e.preventDefault();
-  setUploading(true);
+  const handleProductSubmit = async (e) => {
+    e.preventDefault();
+    setUploading(true);
 
-  const formData = new FormData();
-  formData.append('name', product.name);
-  formData.append('price', product.price);
-  formData.append('description', product.description);
-  if (product.image) formData.append('image', product.image);
+    const formData = new FormData();
+    formData.append('name', product.name);
+    formData.append('price', product.price);
+    formData.append('description', product.description);
+    if (product.image) formData.append('image', product.image);
 
-  try {
-    if (product._id) {
-      await axios.put(`/api/products/${product._id}`, formData, {
-        headers: {
-          Authorization: `Bearer ${token}`,
-          'Content-Type': 'multipart/form-data',
-        },
-      });
-      setSuccessMessage('✅ Product updated successfully!');
-    } else {
-      if (!product.image) {
-        setSuccessMessage('⚠️ Please upload a product image!');
-        return;
+    try {
+      if (product._id) {
+        await axios.put(`${process.env.REACT_APP_API_URL}/api/products/${product._id}`, formData, {
+          headers: {
+            Authorization: `Bearer ${token}`,
+            'Content-Type': 'multipart/form-data',
+          },
+        });
+        setSuccessMessage('✅ Product updated successfully!');
+      } else {
+        if (!product.image) {
+          setSuccessMessage('⚠️ Please upload a product image!');
+          return;
+        }
+        await axios.post(`${process.env.REACT_APP_API_URL}/api/products`, formData, {
+          headers: {
+            Authorization: `Bearer ${token}`,
+            'Content-Type': 'multipart/form-data',
+          },
+        });
+        setSuccessMessage('✅ Product added successfully!');
       }
-      await axios.post('/api/products', formData, {
-        headers: {
-          Authorization: `Bearer ${token}`,
-          'Content-Type': 'multipart/form-data',
-        },
-      });
-      setSuccessMessage('✅ Product added successfully!');
+      resetProductForm();
+      fetchProducts();
+    } catch (error) {
+      setSuccessMessage(`❌ ${error.response?.data?.message || 'Failed to save product'}`);
+    } finally {
+      setShowSuccessModal(true);
+      setUploading(false);
     }
-    resetProductForm();
-    fetchProducts();
-  } catch (error) {
-    setSuccessMessage(`❌ ${error.response?.data?.message || 'Failed to save product'}`);
-  } finally {
-    setShowSuccessModal(true);
-    setUploading(false);
-  }
-};
-
+  };
 
   const resetProductForm = () => {
     setProduct({ name: '', price: '', description: '', image: null, _id: null });
@@ -212,51 +202,49 @@ const [successMessage, setSuccessMessage] = useState('');
   };
 
   const handleEditProduct = (prod) => {
-    setProduct({ 
-      name: prod.name, 
-      price: prod.price, 
-      description: prod.description, 
-      image: null, 
-      _id: prod._id 
+    setProduct({
+      name: prod.name,
+      price: prod.price,
+      description: prod.description,
+      image: null,
+      _id: prod._id,
     });
     setPreview(prod.image);
   };
 
   const handleDeleteProduct = async (id) => {
-  try {
-    await axios.delete(`/api/products/${id}`, {
-      headers: { Authorization: `Bearer ${token}` },
-    });
-    fetchProducts();
-    setSuccessMessage('🗑️ Product deleted successfully!');
-  } catch (error) {
-    setSuccessMessage('❌ Failed to delete product.');
-  } finally {
-    setShowSuccessModal(true);
-  }
-};
-
-
-  const handleDeleteAllProducts = () => {
-  showConfirmation('Are you sure you want to delete ALL products?', async () => {
     try {
-      await axios.delete('/api/admin/products', {
+      await axios.delete(`${process.env.REACT_APP_API_URL}/api/products/${id}`, {
         headers: { Authorization: `Bearer ${token}` },
       });
       fetchProducts();
-      setSuccessMessage('🗑️ All products deleted successfully!');
+      setSuccessMessage('🗑️ Product deleted successfully!');
     } catch (error) {
-      setSuccessMessage('❌ Failed to delete all products.');
+      setSuccessMessage('❌ Failed to delete product.');
     } finally {
       setShowSuccessModal(true);
     }
-  });
-};
+  };
 
-  // User Functions
+  const handleDeleteAllProducts = () => {
+    showConfirmation('Are you sure you want to delete ALL products?', async () => {
+      try {
+        await axios.delete(`${process.env.REACT_APP_API_URL}/api/admin/products`, {
+          headers: { Authorization: `Bearer ${token}` },
+        });
+        fetchProducts();
+        setSuccessMessage('🗑️ All products deleted successfully!');
+      } catch (error) {
+        setSuccessMessage('❌ Failed to delete all products.');
+      } finally {
+        setShowSuccessModal(true);
+      }
+    });
+  };
+
   const fetchUsers = async () => {
     try {
-      const res = await axios.get('/api/admin/users', {
+      const res = await axios.get(`${process.env.REACT_APP_API_URL}/api/admin/users`, {
         headers: { Authorization: `Bearer ${token}` },
       });
       setUsers(res.data);
@@ -268,41 +256,38 @@ const [successMessage, setSuccessMessage] = useState('');
   };
 
   const handleDeleteUser = async (id) => {
-  try {
-    await axios.delete(`/api/admin/users/${id}`, {
-      headers: { Authorization: `Bearer ${token}` },
-    });
-    fetchUsers();
-    setSuccessMessage('🗑️ User deleted successfully!');
-  } catch (error) {
-    setSuccessMessage('❌ Failed to delete user.');
-  } finally {
-    setShowSuccessModal(true);
-  }
-};
-
-
- const handleDeleteAllUsers = () => {
-  showConfirmation('Are you sure you want to delete ALL users?', async () => {
     try {
-      await axios.delete('/api/admin/users', {
+      await axios.delete(`${process.env.REACT_APP_API_URL}/api/admin/users/${id}`, {
         headers: { Authorization: `Bearer ${token}` },
       });
       fetchUsers();
-      setSuccessMessage('🗑️ All users deleted successfully!');
+      setSuccessMessage('🗑️ User deleted successfully!');
     } catch (error) {
-      setSuccessMessage('❌ Failed to delete all users.');
+      setSuccessMessage('❌ Failed to delete user.');
     } finally {
       setShowSuccessModal(true);
     }
-  });
-};
+  };
 
+  const handleDeleteAllUsers = () => {
+    showConfirmation('Are you sure you want to delete ALL users?', async () => {
+      try {
+        await axios.delete(`${process.env.REACT_APP_API_URL}/api/admin/users`, {
+          headers: { Authorization: `Bearer ${token}` },
+        });
+        fetchUsers();
+        setSuccessMessage('🗑️ All users deleted successfully!');
+      } catch (error) {
+        setSuccessMessage('❌ Failed to delete all users.');
+      } finally {
+        setShowSuccessModal(true);
+      }
+    });
+  };
 
-  // Order Functions
   const fetchOrders = async () => {
     try {
-      const res = await axios.get('/api/admin/orders', {
+      const res = await axios.get(`${process.env.REACT_APP_API_URL}/api/admin/orders`, {
         headers: { Authorization: `Bearer ${token}` },
       });
       setOrders(res.data);
@@ -316,7 +301,7 @@ const [successMessage, setSuccessMessage] = useState('');
   const handleOrderStatusChange = async (id, status) => {
     try {
       await axios.put(
-        `/api/admin/orders/${id}`,
+        `${process.env.REACT_APP_API_URL}/api/admin/orders/${id}`,
         { status },
         { headers: { Authorization: `Bearer ${token}` } }
       );
@@ -327,38 +312,36 @@ const [successMessage, setSuccessMessage] = useState('');
     }
   };
 
- const handleDeleteOrder = async (id) => {
-  try {
-    await axios.delete(`/api/admin/orders/${id}`, {
-      headers: { Authorization: `Bearer ${token}` },
-    });
-    fetchOrders();
-    setSuccessMessage('🗑️ Order deleted successfully!');
-  } catch (error) {
-    setSuccessMessage('❌ Failed to delete order.');
-  } finally {
-    setShowSuccessModal(true);
-  }
-};
-
-
-  const handleDeleteAllOrders = () => {
-  showConfirmation('Are you sure you want to delete ALL orders?', async () => {
+  const handleDeleteOrder = async (id) => {
     try {
-      await axios.delete('/api/admin/orders', {
+      await axios.delete(`${process.env.REACT_APP_API_URL}/api/admin/orders/${id}`, {
         headers: { Authorization: `Bearer ${token}` },
       });
       fetchOrders();
-      setSuccessMessage('🗑️ All orders deleted successfully!');
+      setSuccessMessage('🗑️ Order deleted successfully!');
     } catch (error) {
-      setSuccessMessage('❌ Failed to delete all orders.');
+      setSuccessMessage('❌ Failed to delete order.');
     } finally {
       setShowSuccessModal(true);
     }
-  });
-};
+  };
 
-  // Profile functions
+  const handleDeleteAllOrders = () => {
+    showConfirmation('Are you sure you want to delete ALL orders?', async () => {
+      try {
+        await axios.delete(`${process.env.REACT_APP_API_URL}/api/admin/orders`, {
+          headers: { Authorization: `Bearer ${token}` },
+        });
+        fetchOrders();
+        setSuccessMessage('🗑️ All orders deleted successfully!');
+      } catch (error) {
+        setSuccessMessage('❌ Failed to delete all orders.');
+      } finally {
+        setShowSuccessModal(true);
+      }
+    });
+  };
+
   const handleImageChange = (e) => {
     const file = e.target.files?.[0];
     if (file) {
@@ -367,41 +350,40 @@ const [successMessage, setSuccessMessage] = useState('');
     }
   };
 
- const handleSaveProfile = async () => {
-  try {
-    const formData = new FormData();
-    formData.append('name', editedName);
-    formData.append('email', editedEmail);
-    formData.append('address', editedAddress);
-    if (profileImage) {
-      formData.append('profileImage', profileImage);
+  const handleSaveProfile = async () => {
+    try {
+      const formData = new FormData();
+      formData.append('name', editedName);
+      formData.append('email', editedEmail);
+      formData.append('address', editedAddress);
+      if (profileImage) {
+        formData.append('profileImage', profileImage);
+      }
+
+      const { data } = await axios.put(`${process.env.REACT_APP_API_URL}/api/auth/update/${user._id}`, formData, {
+        headers: {
+          'Content-Type': 'multipart/form-data',
+          Authorization: `Bearer ${token}`,
+        },
+      });
+
+      setUser(data.user);
+      localStorage.setItem('user', JSON.stringify(data.user));
+      setShowEditModal(false);
+      setProfileImage(null);
+      setPreviewImage(data.user.profileImage || null);
+      setSuccessMessage('✅ Profile updated successfully!');
+    } catch (err) {
+      console.error('Profile update failed:', err);
+      setSuccessMessage('❌ Failed to update profile.');
+    } finally {
+      setShowSuccessModal(true);
     }
-
-    const { data } = await axios.put(`/api/auth/update/${user._id}`, formData, {
-      headers: {
-        'Content-Type': 'multipart/form-data',
-        Authorization: `Bearer ${token}`,
-      },
-    });
-
-    setUser(data.user);
-    localStorage.setItem('user', JSON.stringify(data.user));
-    setShowEditModal(false);
-    setProfileImage(null);
-    setPreviewImage(data.user.profileImage || null);
-    setSuccessMessage('✅ Profile updated successfully!');
-  } catch (err) {
-    console.error('Profile update failed:', err);
-    setSuccessMessage('❌ Failed to update profile.');
-  } finally {
-    setShowSuccessModal(true);
-  }
-};
-
+  };
 
   const handleChangePassword = async () => {
     try {
-      const { data } = await axios.put(`/api/auth/change-password/${user._id}`, {
+      const { data } = await axios.put(`${process.env.REACT_APP_API_URL}/api/auth/change-password/${user._id}`, {
         oldPassword,
         newPassword,
       }, {

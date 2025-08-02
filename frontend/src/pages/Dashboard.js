@@ -60,13 +60,13 @@ const Dashboard = () => {
 
     const fetchStats = async () => {
       try {
-        const ordersRes = await axios.get(`/api/orders/user/${parsedUser._id}`);
+        const ordersRes = await axios.get(`${process.env.REACT_APP_API_URL}/api/orders/user/${parsedUser._id}`);
         const orders = ordersRes.data || [];
         setTotalOrders(orders.length);
         const spent = orders.reduce((sum, order) => sum + (order.product?.price || 0), 0);
         setTotalSpent(spent);
 
-        const cartRes = await axios.get(`/api/cart/user/${parsedUser._id}`);
+        const cartRes = await axios.get(`${process.env.REACT_APP_API_URL}/api/cart/user/${parsedUser._id}`);
         setTotalCarts(cartRes.data?.length || 0);
 
         setLoading(false);
@@ -105,7 +105,7 @@ const Dashboard = () => {
         formData.append('profileImage', profileImage);
       }
 
-      const { data } = await axios.put(`/api/auth/update/${user._id}`, formData, {
+      const { data } = await axios.put(`${process.env.REACT_APP_API_URL}/api/auth/update/${user._id}`, formData, {
         headers: { 'Content-Type': 'multipart/form-data' },
       });
 
@@ -127,7 +127,7 @@ const Dashboard = () => {
 
   const handleChangePassword = async () => {
     try {
-      const { data } = await axios.put(`/api/auth/change-password/${user._id}`, {
+      const { data } = await axios.put(`${process.env.REACT_APP_API_URL}/api/auth/change-password/${user._id}`, {
         oldPassword,
         newPassword,
       });

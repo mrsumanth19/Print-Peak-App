@@ -41,7 +41,7 @@ const Orders = () => {
 
     const fetchOrders = async () => {
       try {
-        const res = await axios.get(`/api/orders/user/${user._id}`);
+        const res = await axios.get(`${process.env.REACT_APP_API_URL}/api/orders/user/${user._id}`);
         setOrders(res.data);
 
         let total = 0;

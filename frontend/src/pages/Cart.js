@@ -32,7 +32,7 @@ const Cart = () => {
 
   const fetchCart = async () => {
     try {
-      const res = await axios.get(`/api/cart/${userId}`);
+      const res = await axios.get(`${process.env.REACT_APP_API_URL}/api/cart/${userId}`);
       const items = res.data;
       const total = items.reduce((sum, item) => sum + (item.product?.price || 0), 0);
 
@@ -52,7 +52,7 @@ const Cart = () => {
       body: 'Are you sure you want to remove this item from your cart?',
       onOk: async () => {
         try {
-          await axios.delete(`/api/cart/item/${productId}/${userId}`);
+          await axios.delete(`${process.env.REACT_APP_API_URL}/api/cart/item/${productId}/${userId}`);
           fetchCart();
         } catch (err) {
           console.error('❌ Error removing item:', err);
@@ -67,7 +67,7 @@ const handleClearCart = () => {
     body: 'Are you sure you want to remove all items from your cart?',
     onOk: async () => {
       try {
-        await axios.delete(`/api/cart/clear/${userId}`);
+        await axios.delete(`${process.env.REACT_APP_API_URL}/api/cart/clear/${userId}`);
         fetchCart(); // refresh UI
       } catch (err) {
         console.error('❌ Error clearing cart:', err);
@@ -116,7 +116,7 @@ const handleClearCart = () => {
 
     try {
       if (method === 'Card Payment') {
-        const res = await axios.post('/api/orders/create-stripe-session', formData, {
+        const res = await axios.post(`${process.env.REACT_APP_API_URL}/api/orders/create-stripe-session`, formData, {
           headers: { 'Content-Type': 'multipart/form-data' },
         });
         const stripe = await stripePromise;
@@ -124,11 +124,11 @@ const handleClearCart = () => {
         return;
       }
 
-      await axios.post('/api/orders/custom', formData, {
-        headers: { 'Content-Type': 'multipart/form-data' },
-      });
+     await axios.post(`${process.env.REACT_APP_API_URL}/api/orders/custom`, formData, {
+  headers: { 'Content-Type': 'multipart/form-data' },
+});
 
-      await axios.delete(`/api/cart/item/${selectedProduct._id}/${userId}`);
+      await axios.delete(`${process.env.REACT_APP_API_URL}/api/cart/item/${selectedProduct._id}/${userId}`);
 
       setModalInfo({
         show: true,

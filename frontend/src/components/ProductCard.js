@@ -55,7 +55,7 @@ const ProductCard = ({ title, price, image, description, productId }) => {
       body: 'Do you want to add this item to your cart?',
       onOk: async () => {
         try {
-          const res = await axios.post('/api/cart/add', { userId, productId });
+          const res = await axios.post(`${process.env.REACT_APP_API_URL}/api/cart/add`, { userId, productId });
 
           if (res.data.message === 'Already in cart') {
             setModalInfo({
@@ -138,7 +138,7 @@ const ProductCard = ({ title, price, image, description, productId }) => {
 
     if (method === 'Card Payment') {
       try {
-        const res = await axios.post('/api/orders/create-stripe-session', formData, {
+        const res = await axios.post(`${process.env.REACT_APP_API_URL}/api/orders/create-stripe-session`, formData, {
           headers: { 'Content-Type': 'multipart/form-data' },
         });
 
@@ -156,7 +156,7 @@ const ProductCard = ({ title, price, image, description, productId }) => {
     }
 
     try {
-      await axios.post('/api/orders/custom', formData, {
+      await axios.post(`${process.env.REACT_APP_API_URL}/api/orders/custom`, formData, {
         headers: { 'Content-Type': 'multipart/form-data' },
       });
 
