@@ -3,9 +3,11 @@ const router = express.Router();
 const multer = require('multer');
 const streamifier = require('streamifier');
 const stripe = require('stripe')(process.env.STRIPE_SECRET_KEY);
+
 const { cloudinary } = require('../utils/cloudinary');
 const Order = require('../models/Order');
 const Product = require('../models/Product');
+const Cart = require('../models/Cart');
 const { getOrdersByUser } = require('../controllers/orderController');
 
 const upload = multer();
@@ -44,6 +46,10 @@ router.post('/custom', upload.single('design'), async (req, res) => {
     });
 
     const savedOrder = await newOrder.save();
+
+    // ✅ Remove product from user's cart
+    await Cart.deleteMany({ user: userId, product: productId });
+
     const populated = await Order.findById(savedOrder._id).populate('product');
     res.status(201).json(populated);
   } catch (err) {
@@ -103,19 +109,21 @@ router.post('/create-stripe-session', upload.single('design'), async (req, res) 
       cancel_url: 'http://localhost:3000/products?status=cancel',
     });
 
-    // ✅ Save order immediately (assuming payment is successful via redirect)
+    // ✅ Save order immediately
     const newOrder = new Order({
-  user: userId,
-  product: productId,
-  size,
-  method,
-  address,
-  designUrl,
-  status: 'Pending',
-});
-
+      user: userId,
+      product: productId,
+      size,
+      method,
+      address,
+      designUrl,
+      status: 'Pending',
+    });
 
     await newOrder.save();
+
+    // ✅ Remove product from user's cart
+    await Cart.deleteMany({ user: userId, product: productId });
 
     // Return session ID to frontend
     res.status(200).json({ sessionId: session.id });
