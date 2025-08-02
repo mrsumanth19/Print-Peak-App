@@ -31,7 +31,7 @@ const Products = () => {
   const userId = user?._id;
 
   useEffect(() => {
-    axios.get('/api/products')
+    axios.get(`${process.env.REACT_APP_API_URL}/api/products`)
       .then(res => setProducts(res.data))
       .catch(err => console.error('❌ Error fetching products:', err));
   }, []);
