@@ -11,6 +11,8 @@ import Orders from './pages/Orders';
 import AdminDashboard from './pages/AdminDashboard';
 import ProtectedRoute from './utils/ProtectedRoute';
 import Dashboard from './pages/Dashboard';
+import About from './pages/About';
+import Contact from './pages/Contact';
 
 const App = () => {
   return (
@@ -24,6 +26,8 @@ const App = () => {
             <Route path="/register" element={<Register />} />
             <Route path="/cart" element={<Cart />} />
             <Route path="/orders" element={<Orders />} />
+            <Route path="/about" element={<About />} />
+<Route path="/contact" element={<Contact />} />
               <Route path="/dashboard" element={<Dashboard />} />
 
             {/* ✅ Now public */}

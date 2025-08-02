@@ -1,4 +1,9 @@
 /* Remove borders for all cards, forms, buttons, inputs */
+/* Apply Outfit Medium font globally */
+body {
+  font-family: 'Outfit', sans-serif;
+  font-weight: 600;
+}
 .card, .form-control, .btn, .offcanvas, .modal-content {
   border: none !important;
   box-shadow: none !important;

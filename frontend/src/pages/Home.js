@@ -24,7 +24,6 @@ const Home = () => {
     { icon: 'fa-truck-fast', title: 'Fast Delivery', desc: 'Get your products quickly, no delays.' },
     { icon: 'fa-paint-brush', title: 'Custom Designs', desc: 'Upload your own artwork or logo easily.' },
     { icon: 'fa-gem', title: 'Premium Quality', desc: 'Soft, durable, high-grade materials.' },
-    { icon: 'fa-box-open', title: 'Easy Returns', desc: 'Not happy? Get easy replacements.' },
   ];
 
   return (
@@ -102,30 +101,30 @@ const Home = () => {
       </section>
 
       {/* Why Choose Us */}
-      <section className="py-5" style={{ backgroundColor: '#f9f9f9' }}>
-        <Container>
-          <h2 className="text-center fw-bold mb-4">Why Choose BagPack?</h2>
-          <Row className="text-center">
-            {features.map((item, idx) => (
-              <Col key={idx} md={3} sm={6} xs={12} className="mb-4">
-                <div
-                  style={{
-                    backgroundColor: '#ffffff',
-                    borderRadius: '12px',
-                    padding: '30px',
-                    boxShadow: '0 6px 20px rgba(0, 0, 0, 0.05)',
-                    height: '100%',
-                  }}
-                >
-                  <i className={`fa ${item.icon} fa-2x mb-3`} style={{ color: '#1e1e1e' }}></i>
-                  <h5 className="fw-bold">{item.title}</h5>
-                  <p className="text-muted small">{item.desc}</p>
-                </div>
-              </Col>
-            ))}
-          </Row>
-        </Container>
-      </section>
+     <section className="py-5" style={{ backgroundColor: '#f9f9f9' }}>
+  <Container>
+    <h2 className="text-center fw-bold mb-4">Why Choose BagPack?</h2>
+    <Row className="text-center">
+      {features.map((item, idx) => (
+        <Col key={idx} md={4} xs={4} className="mb-4">
+          <div
+            style={{
+              backgroundColor: '#ffffff',
+              borderRadius: '12px',
+              padding: '30px',
+              boxShadow: '0 6px 20px rgba(0, 0, 0, 0.05)',
+              height: '100%',
+            }}
+          >
+            <i className={`fa ${item.icon} fa-2x mb-3`} style={{ color: '#1e1e1e' }}></i>
+            <h5 className="fw-bold">{item.title}</h5>
+            <p className="text-muted small">{item.desc}</p>
+          </div>
+        </Col>
+      ))}
+    </Row>
+  </Container>
+</section>
 
       {/* Final CTA */}
       <section className="py-5 text-center" style={{ backgroundColor: '#ffffff' }}>

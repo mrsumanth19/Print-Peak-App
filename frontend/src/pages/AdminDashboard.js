@@ -408,6 +408,7 @@ const AdminDashboard = () => {
           backgroundColor: '#fff',
           padding: '30px',
           borderRadius: '10px',
+            fontFamily: 'Outfit, sans-serif',
           width: '100%',
           maxWidth: '500px',
           margin: '0 auto 2rem auto',
@@ -420,7 +421,7 @@ const AdminDashboard = () => {
 
         <Form onSubmit={handleProductSubmit}>
           <Form.Group className="mb-3">
-            <Form.Label style={{ color: '#393E46' }}>Product Name</Form.Label>
+            <Form.Label style={{ color: '#393E46',  fontFamily: 'Outfit, sans-serif', }}>Product Name</Form.Label>
             <Form.Control
               type="text"
               name="name"
@@ -429,12 +430,12 @@ const AdminDashboard = () => {
               onChange={handleProductChange}
               required
               className="border-0"
-              style={{ backgroundColor: '#f8f9fa' }}
+              style={{ backgroundColor: '#f8f9fa',  fontFamily: 'Outfit, sans-serif', }}
             />
           </Form.Group>
 
           <Form.Group className="mb-3">
-            <Form.Label style={{ color: '#393E46' }}>Price (₹)</Form.Label>
+            <Form.Label style={{ color: '#393E46',  fontFamily: 'Outfit, sans-serif', }}>Price (₹)</Form.Label>
             <Form.Control
               type="number"
               name="price"
@@ -443,12 +444,12 @@ const AdminDashboard = () => {
               onChange={handleProductChange}
               required
               className="border-0"
-              style={{ backgroundColor: '#f8f9fa' }}
+              style={{ backgroundColor: '#f8f9fa',  fontFamily: 'Outfit, sans-serif', }}
             />
           </Form.Group>
 
           <Form.Group className="mb-3">
-            <Form.Label style={{ color: '#393E46' }}>Description</Form.Label>
+            <Form.Label style={{ color: '#393E46',  fontFamily: 'Outfit, sans-serif', }}>Description</Form.Label>
             <Form.Control
               as="textarea"
               name="description"
@@ -458,12 +459,12 @@ const AdminDashboard = () => {
               onChange={handleProductChange}
               required
               className="border-0"
-              style={{ backgroundColor: '#f8f9fa' }}
+              style={{ backgroundColor: '#f8f9fa',  fontFamily: 'Outfit, sans-serif', }}
             />
           </Form.Group>
 
           <Form.Group className="mb-3">
-            <Form.Label style={{ color: '#393E46' }}>Upload Image</Form.Label>
+            <Form.Label style={{ color: '#393E46',  fontFamily: 'Outfit, sans-serif', }}>Upload Image</Form.Label>
             <Form.Control
               type="file"
               name="image"
@@ -478,7 +479,7 @@ const AdminDashboard = () => {
               <img
                 src={preview}
                 alt="Preview"
-                style={{ maxWidth: '200px', borderRadius: '10px' }}
+                style={{ maxWidth: '200px', borderRadius: '10px' ,  fontFamily: 'Outfit, sans-serif',}}
               />
             </div>
           )}
@@ -486,7 +487,7 @@ const AdminDashboard = () => {
           <Button
             type="submit"
             className="w-100 fw-bold"
-            style={{ backgroundColor: '#d90429', border: 'none' }}
+            style={{ backgroundColor: '#d90429', border: 'none',  fontFamily: 'Outfit, sans-serif', }}
             disabled={uploading}
           >
             {uploading ? 'Saving...' : product._id ? 'Update Product' : 'Add Product'}
@@ -500,7 +501,7 @@ const AdminDashboard = () => {
         </Button>
       </div>
 
-      <h5 style={{ color: colors.textDark, marginBottom: '1rem' }}>
+      <h5 style={{ color: colors.textDark, marginBottom: '1rem',  fontFamily: 'Outfit, sans-serif', }}>
         All Products ({totalProducts})
       </h5>
 
@@ -509,13 +510,13 @@ const AdminDashboard = () => {
           <Col key={prod._id}>
             <Card
               className="h-100"
-              style={{ backgroundColor: '#ffffff', border: 'none', boxShadow: '0 2px 8px rgba(0,0,0,0.05)' }}
+              style={{ backgroundColor: '#ffffff', border: 'none', boxShadow: '0 2px 8px rgba(0,0,0,0.05)',  fontFamily: 'Outfit, sans-serif', }}
             >
               <Card.Img
                 variant="top"
                 src={prod.image}
                 alt={prod.name}
-                style={{ width: '100%', height: '250px', objectFit: 'cover', borderTopLeftRadius: '10px', borderTopRightRadius: '10px' }}
+                style={{ width: '100%', height: '250px', objectFit: 'cover', borderTopLeftRadius: '10px', borderTopRightRadius: '10px',  fontFamily: 'Outfit, sans-serif', }}
               />
               <Card.Body>
                 <Card.Title>{prod.name}</Card.Title>
@@ -574,6 +575,7 @@ const AdminDashboard = () => {
                 backgroundColor: '#ffffff', // Changed from colors.cardBg to white
                 borderRadius: '12px',
                 border: 'none',
+                  fontFamily: 'Outfit, sans-serif',
               }}
             >
               <Card.Body className="text-center d-flex flex-column align-items-center">
@@ -587,6 +589,7 @@ const AdminDashboard = () => {
                       objectFit: 'cover',
                       marginBottom: '1rem',
                       border: '2px solid #ccc',
+                        fontFamily: 'Outfit, sans-serif',
                     }}
                   />
                 ) : (
@@ -602,6 +605,7 @@ const AdminDashboard = () => {
                       fontSize: '28px',
                       color: '#999',
                       marginBottom: '1rem',
+                        fontFamily: 'Outfit, sans-serif',
                     }}
                   >
                     ?
@@ -610,11 +614,11 @@ const AdminDashboard = () => {
 
                 <Card.Title className="mb-2">{user.name}</Card.Title>
 
-                <div className="mb-1 text-muted" style={{ fontSize: '0.95rem' }}>
+                <div className="mb-1 text-muted" style={{ fontSize: '0.95rem',  fontFamily: 'Outfit, sans-serif', }}>
                   <strong>Email:</strong> {user.email}
                 </div>
 
-                <div className="mb-1" style={{ fontSize: '0.95rem' }}>
+                <div className="mb-1" style={{ fontSize: '0.95rem',  fontFamily: 'Outfit, sans-serif',}}>
                   <strong>Admin:</strong>{' '}
                   <span className={`badge ${user.isAdmin ? 'bg-success' : 'bg-secondary'}`}>
                     {user.isAdmin ? 'Yes' : 'No'}
@@ -622,7 +626,7 @@ const AdminDashboard = () => {
                 </div>
 
                 {user.address && (
-                  <div className="text-muted mb-2" style={{ fontSize: '0.9rem' }}>
+                  <div className="text-muted mb-2" style={{ fontSize: '0.9rem',  fontFamily: 'Outfit, sans-serif', }}>
                     <strong>Address:</strong> {user.address}
                   </div>
                 )}
@@ -630,7 +634,7 @@ const AdminDashboard = () => {
 
               <Card.Footer
                 className="text-center mt-auto"
-                style={{ backgroundColor: 'transparent', border: 'none' }}
+                style={{ backgroundColor: 'transparent', border: 'none',  fontFamily: 'Outfit, sans-serif', }}
               >
                 <Button
                   variant="danger"
@@ -641,6 +645,7 @@ const AdminDashboard = () => {
                     border: 'none',
                     width: '80%',
                     fontWeight: 500,
+                      fontFamily: 'Outfit, sans-serif',
                     padding: '6px 12px',
                   }}
                 >
@@ -660,7 +665,7 @@ const AdminDashboard = () => {
           <>
         
             <div className="d-flex justify-content-end mb-3">
-              <Button variant="danger" onClick={handleDeleteAllOrders} style={{ border: 'none' }}>
+              <Button variant="danger" onClick={handleDeleteAllOrders} style={{ border: 'none',  fontFamily: 'Outfit, sans-serif',}}>
                 Delete All Orders
               </Button>
             </div>
@@ -668,12 +673,12 @@ const AdminDashboard = () => {
             <Row xs={2} md={4} className="g-4">
               {orders.map((order) => (
                 <Col key={order._id}>
-                  <Card style={{ backgroundColor: colors.cardBg, border: 'none' }}>
-                    <div style={{ height: '250px', position: 'relative', backgroundColor: '#fff' }}>
+                  <Card style={{ backgroundColor: colors.cardBg, border: 'none',  fontFamily: 'Outfit, sans-serif', }}>
+                    <div style={{ height: '250px', position: 'relative', backgroundColor: '#fff', fontFamily: 'Outfit, sans-serif',}}>
                       <img
                         src={order.product?.image}
                         alt="Product"
-                        style={{ width: '100%', height: '100%', objectFit: 'contain' }}
+                        style={{ width: '100%', height: '100%', objectFit: 'contain',  fontFamily: 'Outfit, sans-serif' }}
                       />
                       {order.designUrl && (
                         <img
@@ -685,6 +690,7 @@ const AdminDashboard = () => {
                             left: '50%',
                             width: '80px',
                             height: '80px',
+                              fontFamily: 'Outfit, sans-serif',
                             transform: 'translate(-50%, -50%)',
                             objectFit: 'contain'
                           }}
@@ -724,12 +730,12 @@ const AdminDashboard = () => {
                         </Card.Text>
                       )}
                     </Card.Body>
-                    <Card.Footer style={{ backgroundColor: 'transparent', border: 'none' }}>
+                    <Card.Footer style={{ backgroundColor: 'transparent', border: 'none',  fontFamily: 'Outfit, sans-serif', }}>
                       <div className="d-flex justify-content-between align-items-center">
                         <Form.Select
                           value={order.status}
                           onChange={(e) => handleOrderStatusChange(order._id, e.target.value)}
-                          style={{ border: 'none', width: '70%' }}
+                          style={{ border: 'none', width: '70%',  fontFamily: 'Outfit, sans-serif', }}
                         >
                           <option value="Pending">Pending</option>
                           <option value="Shipped">Shipped</option>
@@ -740,7 +746,7 @@ const AdminDashboard = () => {
                           variant="danger"
                           size="sm"
                           onClick={() => handleDeleteOrder(order._id)}
-                          style={{ border: 'none' }}
+                          style={{ border: 'none',  fontFamily: 'Outfit, sans-serif', }}
                         >
                           Delete
                         </Button>
@@ -763,6 +769,7 @@ const AdminDashboard = () => {
             border: 'none',
             boxShadow: '0 4px 20px rgba(0, 0, 0, 0.08)',
             borderRadius: '16px',
+              fontFamily: 'Outfit, sans-serif',
             padding: '30px',
             backgroundColor: '#fff',
           }}
@@ -777,7 +784,7 @@ const AdminDashboard = () => {
                   src={previewImage}
                   alt="Profile"
                   className="rounded-circle"
-                  style={{ width: '100px', height: '100px', objectFit: 'cover' }}
+                  style={{ width: '100px', height: '100px', objectFit: 'cover',  fontFamily: 'Outfit, sans-serif', }}
                 />
               ) : (
                 <div
@@ -785,6 +792,7 @@ const AdminDashboard = () => {
                     width: '100px',
                     height: '100px',
                     backgroundColor: '#eee',
+                      fontFamily: 'Outfit, sans-serif',
                     borderRadius: '50%',
                     display: 'flex',
                     alignItems: 'center',
@@ -828,6 +836,7 @@ const AdminDashboard = () => {
               style={{
                 padding: '10px 20px',
                 fontWeight: 500,
+                  fontFamily: 'Outfit, sans-serif',
                 borderRadius: '10px',
               }}
               onClick={() => setShowEditModal(true)}
@@ -839,6 +848,7 @@ const AdminDashboard = () => {
               style={{
                 padding: '10px 20px',
                 fontWeight: 500,
+                  fontFamily: 'Outfit, sans-serif',
                 borderRadius: '10px',
               }}
               onClick={() => setShowPasswordModal(true)}
@@ -938,6 +948,7 @@ const AdminDashboard = () => {
       style={{
         padding: '12px 20px',
         fontSize: '16px',
+          fontFamily: 'Outfit, sans-serif',
         borderRadius: '10px',
         fontWeight: '500',
       }}
@@ -955,6 +966,7 @@ const AdminDashboard = () => {
       style={{
         padding: '12px 20px',
         fontSize: '16px',
+          fontFamily: 'Outfit, sans-serif',
         borderRadius: '10px',
         fontWeight: '500',
       }}
@@ -972,6 +984,7 @@ const AdminDashboard = () => {
       style={{
         padding: '12px 20px',
         fontSize: '16px',
+          fontFamily: 'Outfit, sans-serif',
         borderRadius: '10px',
         fontWeight: '500',
       }}
@@ -989,6 +1002,7 @@ const AdminDashboard = () => {
       style={{
         padding: '12px 20px',
         fontSize: '16px',
+          fontFamily: 'Outfit, sans-serif',
         borderRadius: '10px',
         fontWeight: '500',
       }}
@@ -1174,6 +1188,7 @@ const AdminDashboard = () => {
             backgroundColor: 'rgba(0,0,0,0.5)',
             display: 'flex',
             justifyContent: 'center',
+              fontFamily: 'Outfit, sans-serif',
             alignItems: 'center',
             zIndex: 9999,
           }}
@@ -1185,6 +1200,7 @@ const AdminDashboard = () => {
               borderRadius: '10px',
               boxShadow: '0 0 10px rgba(0,0,0,0.25)',
               maxWidth: '400px',
+                fontFamily: 'Outfit, sans-serif',
               width: '90%',
               textAlign: 'center',
               border: 'none'
