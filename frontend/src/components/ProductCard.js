@@ -185,9 +185,9 @@ const ProductCard = ({ title, price, image, description, productId }) => {
         <Card.Img variant="top" src={image} alt={title} className="product-img" />
         <Card.Body className="d-flex flex-column justify-content-between p-3">
           <div>
-            <Card.Title className="fw-semibold" style={{ fontSize: '1.05rem', color: '#393E46' }}>{title}</Card.Title>
-            <Card.Text className="fw-bold" style={{ color: '#d90429' }}>{price}</Card.Text>
-            {description && <Card.Text style={{ fontSize: '0.9rem', color: '#6c757d' }}>{description}</Card.Text>}
+            <Card.Title className="fw-semibold" style={{ fontSize: '1.05rem', color: '#393E46',fontFamily: 'Outfit, sans-serif'}}>{title}</Card.Title>
+            <Card.Text className="fw-bold" style={{ color: '#d90429',fontFamily: 'Outfit, sans-serif'}}>{price}</Card.Text>
+            {description && <Card.Text style={{ fontSize: '0.9rem', color: '#6c757d',fontFamily: 'Outfit, sans-serif' }}>{description}</Card.Text>}
           </div>
           <div className="d-flex justify-content-between mt-3 flex-wrap gap-2">
             <Button className="product-button-outline" onClick={handleAddToCart}><i className="fas fa-cart-plus me-2" /> Add</Button>
@@ -227,6 +227,7 @@ const ProductCard = ({ title, price, image, description, productId }) => {
         width: '100%',
         height: '100%',
         objectFit: 'contain',
+        fontFamily: 'Outfit, sans-serif',
         borderRadius: '8px',
         backgroundColor: '#f8f9fa',
       }}
@@ -251,6 +252,7 @@ const ProductCard = ({ title, price, image, description, productId }) => {
           zIndex: 2,
           border: '1px solid rgba(0,0,0,0.1)',
           boxShadow: '0 0 4px rgba(0,0,0,0.2)',
+          fontFamily: 'Outfit, sans-serif'
         }}
       />
     )}
@@ -271,7 +273,7 @@ const ProductCard = ({ title, price, image, description, productId }) => {
           </Modal.Body>
           <Modal.Footer>
             <Button variant="secondary" onClick={() => setShowBuyModal(false)}>Cancel</Button>
-            <Button type="submit" style={{ backgroundColor: '#d90429', border: 'none' }}>Submit Order</Button>
+            <Button type="submit" style={{ backgroundColor: '#d90429', border: 'none',fontFamily: 'Outfit, sans-serif' }}>Submit Order</Button>
           </Modal.Footer>
         </Form>
       </Modal>
