@@ -252,7 +252,7 @@ const Products = () => {
             </Form.Group>
           </Modal.Body>
           <Modal.Footer>
-            <Button variant="secondary" onClick={() => setShowModal(false)}>Cancel</Button>
+            <Button variant="secondary" style={{ backgroundColor: '#d90429', border: 'none', fontFamily: 'Outfit, sans-serif', }} onClick={() => setShowModal(false)}>Cancel</Button>
             <Button type="submit" style={{ backgroundColor: '#d90429', border: 'none', fontFamily: 'Outfit, sans-serif', }}>Submit Order</Button>
           </Modal.Footer>
         </Form>
