@@ -76,7 +76,7 @@ const Products = () => {
       body: 'Do you want to add this item to your cart?',
       onOk: async () => {
         try {
-          const res = await axios.post('/api/cart/add', { userId, productId: product._id });
+          const res = await axios.post(`${process.env.REACT_APP_API_URL}/api/cart/add`, { userId, productId: product._id });
           if (res.data.message === 'Already in cart') {
             setModalInfo({ show: true, title: 'Already in Cart', body: 'This product is already in your cart.', onOk: () => navigate('/cart') });
           } else {
