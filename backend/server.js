@@ -15,23 +15,28 @@ dotenv.config();
 const app = express();
 
 // ✅ CORS Configuration
-const allowedOrigins = [
-  'http://localhost:3000',
-  'http://localhost:3001',
-  'https://print-peak-app.vercel.app/', // 🔁 Replace with your actual Vercel frontend URL
-];
-
 app.use(cors({
   origin: function (origin, callback) {
-    if (!origin || allowedOrigins.includes(origin)) {
+    console.log("🌐 Origin request received:", origin);
+
+    const allowed = [
+      'http://localhost:3000',
+      'http://localhost:3001',
+      'https://print-peak-app.vercel.app',
+      'https://print-peak-app.vercel.app/', // also include trailing slash version
+    ];
+
+    if (!origin || allowed.some(allowedOrigin => origin.startsWith(allowedOrigin))) {
       callback(null, true);
     } else {
+      console.error('❌ CORS Not Allowed from:', origin);
       callback(new Error('CORS Not Allowed'));
     }
   },
   methods: ['GET', 'POST', 'PUT', 'DELETE'],
   credentials: true,
 }));
+
 
 // Middlewares
 app.use(express.json());
